@@ -10,6 +10,8 @@ var eraseEvents = require('./routes/eraseEvents');
 var events = require('./routes/events');
 var actor = require('./routes/actor');
 
+var db = require('./db');
+
 var app = express();
 
 // view engine setup
