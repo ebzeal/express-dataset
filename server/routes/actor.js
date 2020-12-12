@@ -5,6 +5,6 @@ var {getAllActors} = require("../controllers/actors");
 
 // Routes related to actor.
 
-router.get("/api/actors", getAllActors);
+router.get("/actors", getAllActors);
 
 module.exports = router;

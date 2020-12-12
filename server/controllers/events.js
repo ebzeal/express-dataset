@@ -1,22 +1,20 @@
 var db = require("../db");
+const response = require("../utils/response.utils");
 
 var getAllEvents = (_, res, __) => {
 	var sql = "select * from events"
     var params = []
     db.all(sql, params, (err, rows) => {
         if (err) {
-          res.status(400).json({"error":err.message});
-          return;
+          return responseUtil(res, 400, "failure", null, null, err.message);
         }
-        res.json({
-            "message":"success",
-            "data":rows
-        })
+        return responseUtil(res, 200, "success", "All Actors", rows, null);
       });
 };
 
-var addEvent = () => {
-
+var addEvent = (req, res, next) => {
+	const {type, actor, repo} = req.body;
+	
 };
 
 

@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var actorRoutes = require("../routes/actor");
-var eventRoutes = require("../routes/events");
+var actorRoutes = require("./actor");
+var eventRoutes = require("./events");
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

@@ -12,13 +12,12 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     
         db.serialize(() => {
           db.run("DROP TABLE IF EXISTS actors");
-          db.run("DROP TABLE IF EXISTS events");
           db.run("DROP TABLE IF EXISTS repos");
           db.run(`CREATE TABLE actors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             login text NOT NULL UNIQUE, 
             password text, 
-            avatar_url text,
+            avatar_url text DEFAULT "https://via.placeholder.com/150",
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
             )`);
           db.run(`CREATE TABLE repos (
@@ -27,17 +26,22 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             url text,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
             )`);
-          db.run(`CREATE TABLE events (
+          db.run(`CREATE TABLE IF NOT EXISTS events (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             type text, 
             actor INTEGER REFERENCES actors(id) ON DELETE CASCADE,
             repo INTEGER REFERENCES repos(id) ON DELETE CASCADE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
             )`);
-            var insert = 'INSERT INTO actors (login, password, avatar_url) VALUES (?,?,?)'
-                db.run(insert, ["admin",md5("admin123456"),"admin@example.com"])
-                db.run(insert, ["user",md5("user123456"),"user@example.com"])
-                db.run(insert, ["user1",md5("user123456"),"user1@example.com"])
+            var insert = 'INSERT INTO actors (login, password) VALUES (?,?)';
+            var insertRepo = 'INSERT INTO repos (name, url) VALUES (?,?)';
+                db.run(insert, ["bryanMaks",md5("admin123456")]);
+                db.run(insert, ["joLoe",md5("user123456")]);
+                db.run(insert, ["bbking",md5("user123456")]);
+                db.run(insertRepo, ["MetroBooking", "https://github.com/fakeyfakers/metrobooking"]);
+                db.run(insertRepo, ["Allious", "https://github.com/fakeyfakers/allious"]);
+                db.run(insertRepo, ["Market-Trends", "https://github.com/fakeyfakers/markettrends"]);
+                db.run(insertRepo, ["MillaryDrones", "https://github.com/fakeyfakers/millitarydrones"]);
       });
       }
 });
