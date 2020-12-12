@@ -16,15 +16,12 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
           db.run(`CREATE TABLE actors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             login text NOT NULL UNIQUE, 
-            password text, 
-            avatar_url text DEFAULT "https://via.placeholder.com/150",
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+            avatar_url text DEFAULT "https://via.placeholder.com/150"
             )`);
           db.run(`CREATE TABLE repos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name text NOT NULL UNIQUE, 
-            url text,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+            url text
             )`);
           db.run(`CREATE TABLE IF NOT EXISTS events (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,11 +30,11 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             repo INTEGER REFERENCES repos(id) ON DELETE CASCADE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
             )`);
-            var insert = 'INSERT INTO actors (login, password) VALUES (?,?)';
+            var insert = 'INSERT INTO actors (login) VALUES (?)';
             var insertRepo = 'INSERT INTO repos (name, url) VALUES (?,?)';
-                db.run(insert, ["bryanMaks",md5("admin123456")]);
-                db.run(insert, ["joLoe",md5("user123456")]);
-                db.run(insert, ["bbking",md5("user123456")]);
+                db.run(insert, ["bryanMaks"]);
+                db.run(insert, ["joLoe"]);
+                db.run(insert, ["bbking"]);
                 db.run(insertRepo, ["MetroBooking", "https://github.com/fakeyfakers/metrobooking"]);
                 db.run(insertRepo, ["Allious", "https://github.com/fakeyfakers/allious"]);
                 db.run(insertRepo, ["Market-Trends", "https://github.com/fakeyfakers/markettrends"]);

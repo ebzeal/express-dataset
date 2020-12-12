@@ -1,5 +1,5 @@
 
-function responseUtil(res, code, status, message, payload, error){
+const responseUtil = (res, code, status, message, payload, error) => {
   res.status(code).json({
     status,
     statusCode: code,
